@@ -1,0 +1,30 @@
+
+framework:
+  workflows:
+    advert_publishing:
+      type: 'state_machine'
+      audit_trail:
+        enabled: true
+      marking_store:
+        type: 'method'
+        property: 'state'
+      supports:
+        - App\Entity\Advert
+      initial_marking: draft
+      places:
+        - draft
+        - rejected
+        - published
+      transitions:
+        to_rejected:
+          guard: "is_granted('ROLE_ADMIN')"
+          from: published
+          to:   rejected
+        publish:
+          guard: "is_granted('ROLE_ADMIN')"
+          from: draft
+          to:   published
+        reject:
+          guard: "is_granted('ROLE_ADMIN')"
+          from: draft
+          to:   rejected

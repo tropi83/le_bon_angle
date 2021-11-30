@@ -1,0 +1,56 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+
+        <a class="navbar-item" href="{{ url('advert_index') }}">
+            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    {% if app.user is defined and app.user is not null %}
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="{{ url('advert_index') }}">
+                Accueil
+            </a>
+            <a class="navbar-item" href="{{ url('category_index') }}">
+                Categories
+            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Utilisateurs
+                </a>
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" href="{{ url('admin_user_new') }}">
+                        Créer
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item" href="{{ url('admin_user_index') }}">
+                        Voir
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a href="{{ url('admin_user_show', {'id':  app.user and app.user.id ? app.user.id: 0 }) }}"class="button is-primary is-rounded">
+                                    <span class="icon is-small">
+                                        <i class="fa-thin fa-user"></i>
+                                    </span>
+                        <strong>{{ app.user and app.user.username ? app.user.username: ''}}</strong>
+                    </a>
+                    <a href="{{ url('app_logout') }}" class="button is-light is-rounded">
+                        Se déconnecter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</nav>
