@@ -6,6 +6,7 @@ use App\Entity\Advert;
 use App\Form\AdvertType;
 use App\Repository\AdvertRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,10 +27,16 @@ class AdvertController extends AbstractController
 
 
     #[Route('/', name: 'advert_index', methods: ['GET'])]
-    public function index(AdvertRepository $advertRepository): Response
+    public function index(AdvertRepository $advertRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $adverts = $paginator->paginate(
+            $advertRepository->findAll(),
+            $request->query->getInt('page', 1),
+            30
+        );
+
         return $this->render('advert/index.html.twig', [
-            'adverts' => $advertRepository->findAll(),
+            'adverts' => $adverts,
         ]);
     }
 

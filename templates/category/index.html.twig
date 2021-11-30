@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Category index</h1>
 
-    <table class="table">
+    <table class="table width-90">
         <thead>
             <tr>
                 <th>Id</th>
@@ -15,7 +15,7 @@
         </thead>
         <tbody>
         {% for category in categories %}
-            <tr>
+            <tr {% if loop.index is odd %} class="color" {% endif %}>
                 <td>{{ category.id }}</td>
                 <td>{{ category.name }}</td>
                 <td>
@@ -30,6 +30,8 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <div class="width-80">
+        {{ knp_pagination_render(categories) }}
+    </div>
     <a href="{{ path('category_new') }}">Create new</a>
 {% endblock %}

@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Advert index</h1>
 
-    <table class="table">
+    <table class="table width-90">
         <thead>
             <tr>
                 <th>Id</th>
@@ -22,7 +22,7 @@
         </thead>
         <tbody>
         {% for advert in adverts %}
-            <tr>
+            <tr {% if loop.index is odd %} class="table-odd-color" {% endif %}>
                 <td>{{ advert.id }}</td>
                 <td>{{ advert.title }}</td>
                 <td>{{ advert.content }}</td>
@@ -53,6 +53,8 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <div class="width-80">
+        {{ knp_pagination_render(adverts) }}
+    </div>
     <a href="{{ path('advert_new') }}">Create new</a>
 {% endblock %}

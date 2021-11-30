@@ -1,3 +1,17 @@
 .flex{
     display: flex;
 }
+
+.table-odd-color{
+    background-color: #ececec;
+}
+
+.width-80{
+    width: 80%;
+    margin: auto;
+}
+
+.width-90{
+    width: 90%;
+    margin: auto;
+}
