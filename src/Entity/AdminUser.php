@@ -4,42 +4,54 @@ namespace App\Entity;
 
 use App\Repository\AdminUserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=AdminUserRepository::class)
- */
+#[Entity(repositoryClass: AdminUserRepository::class)]
 class AdminUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
-    private $email;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
+    #[ORM\Column(type: 'string', length: '180', unique: 'true')]
+    #[Assert\NotBlank]
+    #[Assert\Email( message: 'Ne correspond pas à une adresse email.')]
+    #[Assert\Length(
+        max: 180,
+        maxMessage: 'L\'adresse email doit avoir au maximum 180 caractères.'
+    )]
+    private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="string", length=128)
-     */
-    private $username;
+
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
+
+
+    #[ORM\Column(type: 'string', length: '128', unique: 'true')]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        max: 128,
+        maxMessage: 'Le nom d\'utilisateur doit avoir au maximum 128 caractères.'
+    )]
+    private ?string $username = null;
 
     /**
      * @var string|null The hashed password
      * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string', length: '255')]
     private ?string $password = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le mot de passe doit avoir au maximum 255 caractères.'
+    )]
     private ?string $plainPassword = null;
 
 
@@ -84,7 +96,7 @@ class AdminUser implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
-    public function setUsername($username)
+    public function setUsername(string $username): self
     {
         $this->username = $username;
 

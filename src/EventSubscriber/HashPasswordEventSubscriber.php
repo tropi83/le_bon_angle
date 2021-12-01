@@ -20,8 +20,6 @@ class HashPasswordEventSubscriber implements EventSubscriberInterface
 
     public function prePersist(LifecycleEventArgs $args ): void {
         $entity = $args->getEntity();
-        dump("prePersist");
-        dump($entity);
         if(!$entity instanceof AdminUser) {
             return;
         }
@@ -30,9 +28,6 @@ class HashPasswordEventSubscriber implements EventSubscriberInterface
 
     public function preUpdate(LifecycleEventArgs $args ): void {
         $entity = $args->getEntity();
-        dump("pre update");
-        dump($entity);
-
         if(!$entity instanceof AdminUser) {
             return;
         }
@@ -45,7 +40,6 @@ class HashPasswordEventSubscriber implements EventSubscriberInterface
                 $userEntity,
                 $userEntity->getPlainPassword()
             );
-            dump($hashedPassword);
             $userEntity->setPassword($hashedPassword);
         }
     }

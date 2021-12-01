@@ -4,23 +4,25 @@ namespace App\Entity;
 
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
- */
+#[Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: 'string', length: '255')]
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le nom de la catégorie doit contenir au maximum 255 caractères.'
+    )]
+    private ?string $name = null;
 
     public function getId(): ?int
     {

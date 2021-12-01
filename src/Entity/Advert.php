@@ -4,93 +4,90 @@ namespace App\Entity;
 
 use App\Repository\AdvertRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Entity(repositoryClass=AdvertRepository::class)
- */
+
+#[Entity(repositoryClass: AdvertRepository::class)]
 class Advert
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Assert\NotBlank
-     * @Assert\Length(
-     *     min = 3,
-     *     max = 100,
-     *     minMessage = "Le titre doit contenir au minimum {{ limit }} caractères",
-     *     maxMessage = "Le titre doit contenir au maximum {{ limit }} caractères"
-     * )
-     *
-     */
-    private $title;
 
-    /**
-     * @ORM\Column(type="text")
-     *
-     * @Assert\NotBlank
-     * @Assert\Length(
-     *     max = 1200,
-     *     maxMessage = "Le contenu doit avoir au maximum {{ limit }} caractères"
-     * )
-     */
-    private $content;
+    #[ORM\Column(type: 'string', length: '255')]
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
+    #[Assert\Length(
+        min: 3,
+        max: 100,
+        minMessage: 'Le titre doit contenir au minimum 3 caractères.',
+        maxMessage: 'Le titre doit contenir au maximum 100 caractères.'
+    )]
+    private ?string $title = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $author;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @Assert\Email(
-     *     message = "Ne correspond pas à une adresse email"
-     * )
-     *
-     */
-    private $email;
+    #[ORM\Column(type: 'string', length: '1200')]
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
+    #[Assert\Length(
+        max: 1200,
+        maxMessage: 'Le contenu doit avoir au maximum 1200 caractères.'
+    )]
+    private ?string $content = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Category::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
 
-    /**
-     * @ORM\Column(type="float")
-     *
-     * @Assert\Range(
-     *      min = 1,
-     *      max = 1000000.00,
-     *      minMessage = "Le prix ne peut pas être inférieur à {{ limit }}",
-     *      maxMessage = "Le prix ne peut pas être supérieur à {{ limit }}"
-     * )
-     *
-     */
-    private $price;
+    #[ORM\Column(type: 'string', length: '255')]
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le nom de l\'auteur doit avoir au maximum 255 caractères.'
+    )]
+    private ?string $author = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $state;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'string', length: '180')]
+    #[Assert\NotBlank]
+    #[Assert\Email( message: 'Ne correspond pas à une adresse email.')]
+    #[Assert\Length(
+        max: 180,
+        maxMessage: 'L\'adresse email doit avoir au maximum 180 caractères.'
+    )]
+    private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $publishedAt;
+
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(nullable: 'false')]
+    private ?Category $category = null;
+
+
+    #[ORM\Column(type: 'float')]
+    #[Assert\NotBlank]
+    #[Assert\Type('float')]
+    #[Assert\Length(
+        min: 1,
+        max: 1000000.00,
+        minMessage: 'Le prix ne peut pas être inférieur à 1.',
+        maxMessage: 'Le prix ne peut pas être supérieur à 1000000.00 .'
+    )]
+    private ? float $price = null;
+
+
+    #[ORM\Column(type: 'string', length: '255')]
+    private ?string $state = null;
+
+
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTime $createdAt = null;
+
+
+    #[ORM\Column(type: 'datetime', nullable: 'true')]
+    private ?\DateTime $publishedAt = null;
 
     public function __construct()
     {

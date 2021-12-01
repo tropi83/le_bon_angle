@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class AdvertType extends AbstractType
 {
@@ -55,9 +56,7 @@ class AdvertType extends AbstractType
                 'required'=> true,
                 'attr' => [
                     'class' => 'input'
-                ],
-                'invalid_message' => 'Le prix doit-être compris entre %min%€ et %max%€',
-                'invalid_message_parameters' => ['%min%' => 1, '%max%' => 1000000.00],
+                ]
             ])
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie',
