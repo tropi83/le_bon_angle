@@ -18,8 +18,10 @@ class AdminUserController extends AbstractController
     #[Route('/', name: 'admin_user_index', methods: ['GET'])]
     public function index(AdminUserRepository $adminUserRepository): Response
     {
+        $adminNumber = sizeof($adminUserRepository->findAll());
         return $this->render('admin_user/index.html.twig', [
             'admin_users' => $adminUserRepository->findAll(),
+            'admin_nb' => $adminNumber,
         ]);
     }
 

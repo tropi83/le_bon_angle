@@ -2,10 +2,10 @@
 {% if pageCount > 1 %}
     <nav class="pagination is-centered" role="navigation" aria-label="pagination">
         {% if previous is defined %}
-            <a rel="prev" class="pagination-previous" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">Previous</a>
+            <a rel="prev" class="pagination-previous" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">Page précédente</a>
         {% endif %}
         {% if next is defined %}
-            <a rel="next" class="pagination-next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">Next page</a>
+            <a rel="next" class="pagination-next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">Page suivante</a>
         {% endif %}
         <ul class="pagination-list">
             {% if first is defined and current != first %}

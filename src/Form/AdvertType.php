@@ -67,7 +67,7 @@ class AdvertType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider',
                 'attr' => [
-                    'class' => 'button is-primary is-rounded'
+                    'class' => 'button is-primary is-rounded strong mt-2'
                 ]
             ]);
     }

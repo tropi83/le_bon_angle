@@ -4,17 +4,25 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Repository\AdvertRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin/category')]
 class CategoryController extends AbstractController
 {
+    protected SessionInterface $session;
+
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
 
     #[Route('/', name: 'category_index', methods: ['GET'])]
     public function index(CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request): Response
@@ -67,7 +75,6 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
             return $this->redirectToRoute('category_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -78,8 +85,20 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'category_delete', methods: ['POST'])]
-    public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Category $category, EntityManagerInterface $entityManager, AdvertRepository $advertRepository ): Response
     {
+
+        // TODO: FLASH MESSAGE DOESN'T WORK
+        $advertsUsedCategory = $advertRepository->findBy([
+            'category' => $category->getId()
+        ]);
+        if(sizeof($advertsUsedCategory) > 0){
+            $this->session->getFlashBag()->add('danger', 'La catégorie est lié a des publications');
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
+
+        }
+
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $entityManager->remove($category);
             $entityManager->flush();

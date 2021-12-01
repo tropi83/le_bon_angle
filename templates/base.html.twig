@@ -15,6 +15,7 @@
             <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
             <script type="text/javascript" src="{{ asset('assets/js/custom.js') }}"></script>
             <script src="https://kit.fontawesome.com/4096b69e43.js" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bulma-toast@2.4.1/dist/bulma-toast.min.js"></script>
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
     </head>
@@ -22,6 +23,19 @@
         <header>
             {% include('navbar.html.twig') %}
         </header>
+        <div class="margin-top-navbar"></div>
         {% block body %}{% endblock %}
+
+        {% if error is defined %}
+            <script type="text/javascript" >
+                bulmaToast.toast({ message: 'Veuillez corrigé les erreurs', type: 'is-danger' })
+            </script>
+        {% endif %}
+
+        {% if success is defined %}
+            <script type="text/javascript" >
+                bulmaToast.toast({ message: 'Opération réussie', type: 'is-success' })
+            </script>
+        {% endif %}
     </body>
 </html>

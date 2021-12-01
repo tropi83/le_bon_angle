@@ -1,54 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Advert{% endblock %}
+{% block title %}Publication {{ advert.title }}{% endblock %}
 
 {% block body %}
-    <h1>Advert</h1>
+    <section class="hero is-link">
+        <div class="hero-body">
+            <div class="float-right">
+                <a class="button is-primary float-right mb-2" href="{{ path('advert_edit', {'id': advert.id}) }}">
+                    <span class="icon">
+                        <i class="fas fa-wrench"></i>
+                    </span>
+                    <span>Modifier</span>
+                </a>
+                {{ include('advert/_delete_form.html.twig') }}
+            </div>
+            <p class="title">
+                {{ advert.title }}
+            </p>
+            <p class="subtitle">
+                Créer le: {{ advert.createdAt ? advert.createdAt|date('Y-m-d H:i:s') : '' }}
+            </p>
+            <a class="button is-primary" href="{{ path('advert_index') }}">
+                    <span class="icon">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </span>
+                <span>Retour aux publications</span>
+            </a>
+        </div>
+    </section>
+    <div class="container">
+        <div class="section">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ advert.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Title</th>
+                        <td>{{ advert.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Content</th>
+                        <td>{{ advert.content }}</td>
+                    </tr>
+                    <tr>
+                        <th>Author</th>
+                        <td>{{ advert.author }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ advert.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Price</th>
+                        <td>{{ advert.price }}</td>
+                    </tr>
+                    <tr>
+                        <th>State</th>
+                        <td>{{ advert.state }}</td>
+                    </tr>
+                    <tr>
+                        <th>PublishedAt</th>
+                        <td>{{ advert.publishedAt ? advert.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ advert.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ advert.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ advert.content }}</td>
-            </tr>
-            <tr>
-                <th>Author</th>
-                <td>{{ advert.author }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ advert.email }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ advert.price }}</td>
-            </tr>
-            <tr>
-                <th>State</th>
-                <td>{{ advert.state }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ advert.createdAt ? advert.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>PublishedAt</th>
-                <td>{{ advert.publishedAt ? advert.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('advert_index') }}">back to list</a>
-
-    <a href="{{ path('advert_edit', {'id': advert.id}) }}">edit</a>
-
-    {{ include('advert/_delete_form.html.twig') }}
 {% endblock %}

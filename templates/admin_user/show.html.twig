@@ -1,38 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}AdminUser{% endblock %}
+{% block title %}Administrateur {{ admin_user.username }}{% endblock %}
 
 {% block body %}
-    <h1>AdminUser</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ admin_user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ admin_user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ admin_user.roles ? admin_user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ admin_user.username }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ admin_user.password }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('admin_user_index') }}">back to list</a>
-
-    <a href="{{ path('admin_user_edit', {'id': admin_user.id}) }}">edit</a>
-
-    {{ include('admin_user/_delete_form.html.twig') }}
+    <section class="hero is-link">
+        <div class="hero-body">
+            <div class="float-right">
+                <a class="button is-primary float-right mb-2" href="{{ path('admin_user_edit', {'id': admin_user.id}) }}">
+                    <span class="icon">
+                        <i class="fas fa-wrench"></i>
+                    </span>
+                    <span>Modifier</span>
+                </a>
+                {% if app.user is defined and app.user.id != admin_user.id %}
+                    {{ include('admin_user/_delete_form.html.twig') }}
+                {% endif %}
+            </div>
+            <p class="title">
+                {{ admin_user.username }}
+            </p>
+            <a class="button is-primary" href="{{ path('admin_user_index') }}">
+                    <span class="icon">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </span>
+                <span>Retour aux administrateurs</span>
+            </a>
+        </div>
+    </section>
+    <div class="container">
+        <div class="section">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ admin_user.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ admin_user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Roles</th>
+                        <td>{{ admin_user.roles ? admin_user.roles|json_encode : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Username</th>
+                        <td>{{ admin_user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Password</th>
+                        <td>{{ admin_user.password }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

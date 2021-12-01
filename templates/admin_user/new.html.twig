@@ -1,11 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New AdminUser{% endblock %}
+{% block title %}Nouvel Administrateur{% endblock %}
 
 {% block body %}
-    <h1>Create new AdminUser</h1>
+    <section class="hero is-link">
+        <div class="hero-body">
+            <a class="button is-primary float-right" href="{{ path('admin_user_index') }}">
+                <span class="icon">
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                </span>
+                <span>Retour aux administrateurs</span>
+            </a>
+            <p class="title">
+                Nouvel Administrateur
+            </p>
+            <p class="subtitle">
+                Completez les champs suivants:
+            </p>
+        </div>
+    </section>
+    <div class="container">
+        <div class="section">
+            {{ include('admin_user/_form.html.twig') }}
+        </div>
+    </div>
 
-    {{ include('admin_user/_form.html.twig') }}
-
-    <a href="{{ path('admin_user_index') }}">back to list</a>
 {% endblock %}

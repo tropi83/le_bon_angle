@@ -13,14 +13,14 @@
                                 <div class="field">
                                     <label for="" class="label">Email</label>
                                     <div class="control has-icons-left">
-                                        <input type="email" id="username" name="_username" placeholder="bobsmith@gmail.com" class="input" value="{{ last_username }}" required>
+                                        <input type="email" id="username" name="_username" placeholder="exemple@gmail.com" class="input" value="{{ last_username }}" required>
                                         <span class="icon is-small is-left">
                                           <i class="fa fa-envelope"></i>
                                         </span>
                                     </div>
                                 </div>
                                 <div class="field">
-                                    <label for="password" class="label">Password</label>
+                                    <label for="password" class="label">Mot de passe</label>
                                     <div class="control has-icons-left">
                                         <input type="password" placeholder="*******" class="input" id="password" name="_password" required/>
                                         <span class="icon is-small is-left">
@@ -39,14 +39,14 @@
                                 <div class="field">
                                     <label for="" class="checkbox">
                                         <input type="checkbox">
-                                        Remember me
+                                        Se souvenir de moi
                                     </label>
                                 </div>
                                 <div class="field">
                                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                                     <input type="hidden" name="_target_path" value="/admin/advert"/>
                                     <button type="submit" class="button is-success">
-                                        Login
+                                        Connexion
                                     </button>
                                 </div>
                             </form>

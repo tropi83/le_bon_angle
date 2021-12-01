@@ -1,15 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit AdminUser{% endblock %}
+{% block title %}Administrateur {{ admin_user.username }}{% endblock %}
 
 {% block body %}
-    <h1>Edit AdminUser</h1>
+    <section class="hero is-link">
+        <div class="hero-body">
+            {% if app.user is defined and app.user.id != admin_user.id %}
+                {{ include('admin_user/_delete_form.html.twig') }}
+            {% endif %}
+            <p class="title">
+                Edition {{ admin_user.username }}
+            </p>
+            <a class="button is-primary" href="{{ path('admin_user_index') }}">
+                    <span class="icon">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </span>
+                <span>Retour aux administrateurs</span>
+            </a>
+        </div>
+    </section>
+    <div class="container">
+        <div class="section">
+            {{ include('admin_user/_form.html.twig') }}
+        </div>
+    </div>
 
-    {{ include('admin_user/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('admin_user_index') }}">back to list</a>
 
-    {% if app.user is defined and app.user.id != admin_user.id %}
-        {{ include('admin_user/_delete_form.html.twig') }}
-    {% endif %}
 {% endblock %}

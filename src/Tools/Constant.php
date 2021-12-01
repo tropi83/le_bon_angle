@@ -7,6 +7,8 @@ namespace App\Tools;
 class Constant
 {
 
+    public $TYPE_PERSON = 'toto';
+
     /**
      * Retourne les états de publication d'un advert
      * @return array

@@ -1,11 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Category{% endblock %}
+{% block title %}Nouvelle catégorie{% endblock %}
 
 {% block body %}
-    <h1>Create new Category</h1>
+    <section class="hero is-link">
+        <div class="hero-body">
+            <a class="button is-primary float-right" href="{{ path('category_index') }}">
+                <span class="icon">
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                </span>
+                <span>Retour aux catégories</span>
+            </a>
+            <p class="title">
+                Nouvelle catégorie
+            </p>
+            <p class="subtitle">
+                Completez les champs suivants:
+            </p>
+        </div>
+    </section>
+    <div class="container">
+        <div class="section">
+            {{ include('category/_form.html.twig') }}
+        </div>
+    </div>
 
-    {{ include('category/_form.html.twig') }}
-
-    <a href="{{ path('category_index') }}">back to list</a>
 {% endblock %}

@@ -1,60 +1,97 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Advert index{% endblock %}
+{% block title %}Publications{% endblock %}
 
 {% block body %}
-    <h1>Advert index</h1>
-
-    <table class="table width-90">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Author</th>
-                <th>Email</th>
-                <th>Price</th>
-                <th>State</th>
-                <th>CreatedAt</th>
-                <th>PublishedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for advert in adverts %}
-            <tr {% if loop.index is odd %} class="table-odd-color" {% endif %}>
-                <td>{{ advert.id }}</td>
-                <td>{{ advert.title }}</td>
-                <td>{{ advert.content }}</td>
-                <td>{{ advert.author }}</td>
-                <td>{{ advert.email }}</td>
-                <td>{{ advert.price }}</td>
-                <td>{{ advert.state }}</td>
-                <td>{{ advert.createdAt ? advert.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ advert.publishedAt ? advert.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    {% if workflow_can(advert, 'publish') %}
-                        <a href="{{ path('advert_workflow', {'id': advert.id, 'state': 'publish' }) }}">Publier</a>
-                    {% endif %}
-                    {% if workflow_can(advert, 'reject') %}
-                        <a href="{{ path('advert_workflow', {'id': advert.id, 'state': 'reject' }) }}">Rejeter</a>
-                    {% endif %}
-                    {% if workflow_can(advert, 'to_rejected') %}
-                        <a href= "{{ path('advert_workflow', {'id': advert.id, 'state': 'to_rejected' }) }}">A Rejeter</a>
-                    {% endif %}
-                    <a href="{{ path('advert_show', {'id': advert.id}) }}">show</a>
-                    <a href="{{ path('advert_edit', {'id': advert.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div class="width-80">
+    <section class="hero is-link">
+        <div class="hero-body">
+            <a class="button is-primary float-right" href="{{ path('advert_new') }}">
+                <span class="icon">
+                    <i class="fas fa-plus-circle"></i>
+                </span>
+                <span>Ajouter</span>
+            </a>
+            <p class="title">
+                Publications
+            </p>
+            <p class="subtitle">
+                Total: {{ adverts.getTotalItemCount  }}
+            </p>
+        </div>
+    </section>
+    <div class="container">
+        <div class="section">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Titre</th>
+                        <th>Contenu</th>
+                        <th>Auteur</th>
+                        <th>Email</th>
+                        <th>Prix</th>
+                        <th>Etat</th>
+                        <th>Date de création</th>
+                        <th>Date de publication</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for advert in adverts %}
+                    <tr {% if loop.index is odd %} class="" {% endif %}>
+                        <td>
+                            <a class="id-tag" href="{{ path('advert_show', {'id': advert.id}) }}">#{{ advert.id }}</a>
+                        </td>
+                        <td>{{ advert.title }}</td>
+                        <td>{{ advert.content }}</td>
+                        <td>{{ advert.author }}</td>
+                        <td>{{ advert.email }}</td>
+                        <td>{{ advert.price }}</td>
+                        <td>{{ advert.state }}</td>
+                        <td>{{ advert.createdAt ? advert.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ advert.publishedAt ? advert.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>
+                            {% if workflow_can(advert, 'publish') %}
+                                <a class="button is-primary is-rounded float-right mb-1" href="{{ path('advert_workflow', {'id': advert.id, 'state': 'publish' }) }}">
+                                    <span class="icon">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                    <span>Publier</span>
+                                </a>
+                            {% endif %}
+                            {% if workflow_can(advert, 'reject') %}
+                                <a class="button is-danger is-rounded float-right  mb-1" href="{{ path('advert_workflow', {'id': advert.id, 'state': 'reject' }) }}">
+                                    <span class="icon">
+                                            <i class="fas fa-ban"></i>
+                                        </span>
+                                    <span>Rejeter</span>
+                                </a>
+                            {% endif %}
+                            {% if workflow_can(advert, 'to_rejected') %}
+                                <a class="button is-danger is-rounded float-right mb-1" href="{{ path('advert_workflow', {'id': advert.id, 'state': 'to_rejected' }) }}">
+                                    <span class="icon">
+                                            <i class="fas fa-eject"></i>
+                                        </span>
+                                    <span>A Rejeter</span>
+                                </a>
+                            {% endif %}
+                            <a class="button is-grey-light is-rounded float-right" href="{{ path('advert_edit', {'id': advert.id}) }}">
+                                    <span class="icon">
+                                            <i class="fas fa-wrench"></i>
+                                        </span>
+                                <span>Modifier</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="10">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {{ knp_pagination_render(adverts) }}
     </div>
-    <a href="{{ path('advert_new') }}">Create new</a>
+
 {% endblock %}

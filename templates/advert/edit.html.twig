@@ -1,13 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Advert{% endblock %}
+{% block title %}Publication {{ advert.title }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Advert</h1>
+    <section class="hero is-link">
+        <div class="hero-body">
+            {{ include('advert/_delete_form.html.twig') }}
+            <p class="title">
+                Edition {{ advert.title }}
+            </p>
+            <p class="subtitle">
+                Créer le: {{ advert.createdAt ? advert.createdAt|date('Y-m-d H:i:s') : '' }}
+            </p>
+            <a class="button is-primary" href="{{ path('advert_index') }}">
+                    <span class="icon">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </span>
+                <span>Retour aux publications</span>
+            </a>
+        </div>
+    </section>
+    <div class="container">
+        <div class="section">
+            {{ include('advert/_form.html.twig') }}
+        </div>
+    </div>
 
-    {{ include('advert/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('advert_index') }}">back to list</a>
-
-    {{ include('advert/_delete_form.html.twig') }}
 {% endblock %}

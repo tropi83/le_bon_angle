@@ -1,26 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category{% endblock %}
+{% block title %}Catégorie {{ category.name }}{% endblock %}
 
 {% block body %}
-    <h1>Category</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ category.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ category.name }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('category_index') }}">back to list</a>
-
-    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
-
-    {{ include('category/_delete_form.html.twig') }}
+    <section class="hero is-link">
+        <div class="hero-body">
+            <div class="float-right">
+                <a class="button is-primary float-right mb-2" href="{{ path('category_edit', {'id': category.id}) }}">
+                    <span class="icon">
+                        <i class="fas fa-wrench"></i>
+                    </span>
+                    <span>Modifier</span>
+                </a>
+                {{ include('category/_delete_form.html.twig') }}
+            </div>
+            <p class="title">
+                {{ category.name }}
+            </p>
+            <a class="button is-primary" href="{{ path('category_index') }}">
+                    <span class="icon">
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </span>
+                <span>Retour aux catégories</span>
+            </a>
+        </div>
+    </section>
+    <div class="container">
+        <div class="section">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ category.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ category.name }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

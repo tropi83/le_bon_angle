@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Exception\LogicException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\WorkflowInterface;
+use App\Tools\Constant;
 
 #[Route('/admin/advert')]
 class AdvertController extends AbstractController
@@ -105,7 +106,6 @@ class AdvertController extends AbstractController
     #[Route('/{id}/{state}', name: 'advert_workflow', methods: ['GET', 'POST'])]
     public function switchWorkflowState(Request $request, Advert $advert, EntityManagerInterface $entityManager, $state): Response
     {
-        dump($advert);
         if($state === 'to_rejected' || $state === 'publish' || $state === 'reject'){
             try {
                 $this->advertPublishingStateMachine->apply($advert, $state);

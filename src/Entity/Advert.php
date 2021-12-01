@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\AdvertRepository;
-use App\Tools\Constant;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 

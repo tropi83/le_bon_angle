@@ -1,41 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}AdminUser index{% endblock %}
+{% block title %}Administrateurs{% endblock %}
 
 {% block body %}
-    <h1>AdminUser index</h1>
+    <section class="hero is-link">
+        <div class="hero-body">
+            <a class="button is-primary float-right" href="{{ path('admin_user_new') }}">
+                <span class="icon">
+                    <i class="fas fa-plus-circle"></i>
+                </span>
+                <span>Ajouter</span>
+            </a>
+            <p class="title">
+                Administrateurs
+            </p>
+            <p class="subtitle">
+                Total: {{ admin_nb }}
+            </p>
+        </div>
+    </section>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for admin_user in admin_users %}
-            <tr>
-                <td>{{ admin_user.id }}</td>
-                <td>{{ admin_user.email }}</td>
-                <td>{{ admin_user.roles ? admin_user.roles|json_encode : '' }}</td>
-                <td>{{ admin_user.username }}</td>
-                <td>{{ admin_user.password }}</td>
-                <td>
-                    <a href="{{ path('admin_user_show', {'id': admin_user.id}) }}">show</a>
-                    <a href="{{ path('admin_user_edit', {'id': admin_user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Roles</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for admin_user in admin_users %}
+                    <tr>
+                        <td>
+                            <a class="id-tag" href="{{ path('admin_user_show', {'id': admin_user.id}) }}">#{{ admin_user.id }}</a>
+                        </td>
+                        <td>{{ admin_user.email }}</td>
+                        <td>{{ admin_user.roles ? admin_user.roles|json_encode : '' }}</td>
+                        <td>{{ admin_user.username }}</td>
+                        <td>{{ admin_user.password }}</td>
+                        <td>
+                            <a class="button is-grey-light is-rounded float-right" href="{{ path('admin_user_edit', {'id': admin_user.id}) }}">
+                                    <span class="icon">
+                                            <i class="fas fa-wrench"></i>
+                                        </span>
+                                <span>Modifier</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
-    <a href="{{ path('admin_user_new') }}">Create new</a>
 {% endblock %}

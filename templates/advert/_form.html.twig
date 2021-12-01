@@ -1,4 +1,42 @@
+
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="field">
+        {{ form_row(form.title) }}
+        <div class="has-text-danger">
+            {{ form_errors(form.title) }}
+        </div>
+    </div>
+    <div class="field">
+        {{ form_row(form.content) }}
+        <div class="has-text-danger">
+            {{ form_errors(form.content) }}
+        </div>
+    </div>
+    <div class="field">
+        {{ form_row(form.author) }}
+        <div class="has-text-danger">
+            {{ form_errors(form.author) }}
+        </div>
+    </div>
+    <div class="field">
+        {{ form_row(form.email) }}
+        <div class="has-text-danger">
+            {{ form_errors(form.email) }}
+        </div>
+    </div>
+    <div class="field">
+        {{ form_row(form.price) }}
+        <div class="has-text-danger">
+            {{ form_errors(form.price) }}
+        </div>
+    </div>
+    <div class="field">
+        <div class="select is-link">
+            {{ form_row(form.category) }}
+        </div>
+    </div>
+    <div style="text-align: center">
+        {{ form_row(form.submit) }}
+    </div>
 {{ form_end(form) }}

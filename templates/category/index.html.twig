@@ -3,35 +3,57 @@
 {% block title %}Category index{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
-
-    <table class="table width-90">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr {% if loop.index is odd %} class="color" {% endif %}>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div class="width-80">
+    <section class="hero is-link">
+        <div class="hero-body">
+            <a class="button is-primary float-right" href="{{ path('category_new') }}">
+                <span class="icon">
+                    <i class="fas fa-plus-circle"></i>
+                </span>
+                <span>Ajouter</span>
+            </a>
+            <p class="title">
+                Catégories
+            </p>
+            <p class="subtitle">
+                Total: {{ categories.getTotalItemCount  }}
+            </p>
+        </div>
+    </section>
+    <div class="container">
+        <div class="section">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+                    <tr {% if loop.index is odd %} class="color" {% endif %}>
+                        <td>
+                            <a class="id-tag" href="{{ path('category_show', {'id': category.id}) }}">#{{ category.id }}</a>
+                        </td>
+                        <td>{{ category.name }}</td>
+                        <td>
+                            <a class="button is-grey-light is-rounded float-right" href="{{ path('category_edit', {'id': category.id}) }}">
+                                    <span class="icon">
+                                            <i class="fas fa-wrench"></i>
+                                        </span>
+                                <span>Modifier</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {{ knp_pagination_render(categories) }}
     </div>
-    <a href="{{ path('category_new') }}">Create new</a>
+
 {% endblock %}

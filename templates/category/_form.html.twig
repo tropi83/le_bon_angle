@@ -1,4 +1,11 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="field">
+        {{ form_row(form.name) }}
+        <div class="has-text-danger">
+            {{ form_errors(form.name) }}
+        </div>
+    </div>
+    <div style="text-align: center">
+        {{ form_row(form.submit) }}
+    </div>
 {{ form_end(form) }}
