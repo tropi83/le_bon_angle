@@ -1,0 +1,25 @@
+{% apply inky_to_html %}
+    <container>
+        <row class="header">
+            <columns>
+                <spacer size="16"></spacer>
+                <h1 class="text-center">Bonjour {{ email.to[0].address }},</h1>
+            </columns>
+        </row>
+        <row class="">
+            <p>
+                Votre publication "{{ publication_title }}" a été validé le {{ publication_date |date('Y-m-d H:i:s') }} .
+            </p>
+        </row>
+        <row class="">
+            <p>
+                <code>{{ publication_content }}</code>
+            </p>
+        </row>
+        <row class="">
+            <p>
+                <a href="{{ url('advert_show', {'id': publication_id}) }}">Cliquez ici pour voir votre publication</a>
+            </p>
+        </row>
+    </container>
+{% endapply %}
