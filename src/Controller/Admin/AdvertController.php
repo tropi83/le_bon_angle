@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Advert;
 use App\Form\AdvertType;
 use App\Repository\AdvertRepository;
+use App\Repository\PictureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,17 +65,24 @@ class AdvertController extends AbstractController
 
 
     #[Route('/{id}', name: 'advert_show', methods: ['GET'])]
-    public function show(Advert $advert): Response
+    public function show(Advert $advert, PictureRepository $pictureRepository): Response
     {
+        $pictures = $pictureRepository->findBy([
+            'advert' => $advert->getId()
+        ]);
         return $this->render('advert/show.html.twig', [
             'advert' => $advert,
+            'pictures' => $pictures,
         ]);
     }
 
 
     #[Route('/{id}/edit', name: 'advert_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Advert $advert, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Advert $advert, EntityManagerInterface $entityManager, PictureRepository $pictureRepository): Response
     {
+        $pictures = $pictureRepository->findBy([
+            'advert' => $advert->getId()
+        ]);
         $form = $this->createForm(AdvertType::class, $advert);
         $form->handleRequest($request);
 
@@ -87,6 +95,7 @@ class AdvertController extends AbstractController
         return $this->renderForm('advert/edit.html.twig', [
             'advert' => $advert,
             'form' => $form,
+            'pictures' => $pictures,
         ]);
     }
 

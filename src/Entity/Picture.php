@@ -2,79 +2,120 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\Api\CreatePictureAction;
 use App\Repository\PictureRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[Entity(repositoryClass: PictureRepository::class)]
-#[Vich\Uploadable]
+/**
+ * @Vich\Uploadable
+ */
+#[ApiResource(
+    collectionOperations: [
+        'get',
+        'post' => [
+            'controller' => CreatePictureAction::class,
+            'deserialize' => false,
+            'validation_groups' => ['Default', 'picture_create'],
+            'openapi_context' => [
+                'requestBody' => [
+                    'content' => [
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'file' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                    ]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    iri: 'http://schema.org/Picture',
+    itemOperations: ['get'],
+    normalizationContext: ['groups' => ['picture:read']]
+)]
 class Picture
 {
 
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['picture:read', 'picture:write'])]
     private ?int $id = null;
 
-    #[Vich\UploadableField(array('mapping' => 'advert_image'))]
-    private ?File $imageFile = null;
+    //#[Vich\UploadableField(array('mapping' => 'picture', 'fileNameProperty' => 'path'))]
+    /**
+     * @Vich\UploadableField(mapping="picture", fileNameProperty="path")
+     */
+    #[Groups(['picture:read', 'picture:write'])]
+    #[Assert\NotNull(groups: ['picture_create'])]
+    public ?File $file = null;
 
-    #[ORM\Column(type: 'string')]
-    private ?string $imageName = null;
 
-    #[ORM\Column(type: 'integer')]
-    private ?int $imageSize = null;
+    #[ApiProperty(iri: 'http://schema.org/path')]
+    #[ORM\Column(type: 'string', nullable: 'true')]
+    #[Groups(['picture:read', 'picture:write'])]
+    public ?string $path = null;
+
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['picture:read', 'picture:write'])]
     private ?\DateTimeInterface $createdAt = null;
 
-    #[ORM\ManyToOne(targetEntity: Category::class)]
+
+    #[ORM\ManyToOne(targetEntity: Advert::class)]
     #[ORM\JoinColumn(nullable: 'false')]
+    #[Groups(['picture:read', 'picture:write'])]
     private ?Advert $advert = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setImageFile(?File $imageFile = null): void
+    public function setFile(?File $file = null): void
     {
-        $this->imageFile = $imageFile;
+        $this->file = $file;
 
-        if (null !== $imageFile) {
+        if (null !== $file) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->createdAt = new \DateTimeImmutable();
         }
     }
 
-    public function getImageFile(): ?File
+    public function getFile(): ?File
     {
-        return $this->imageFile;
+        return $this->file;
     }
 
-    public function setImageName(?string $imageName): void
+    public function setPath(?string $path): void
     {
-        $this->imageName = $imageName;
+        $this->path = $path;
     }
 
-    public function getImageName(): ?string
+    public function getPath(): ?string
     {
-        return $this->imageName;
+        return $this->path;
     }
-
-    public function setImageSize(?int $imageSize): void
-    {
-        $this->imageSize = $imageSize;
-    }
-
-    public function getImageSize(): ?int
-    {
-        return $this->imageSize;
-    }
-
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -93,7 +134,7 @@ class Picture
         return $this->advert;
     }
 
-    public function setCategory(?Advert $advert): self
+    public function setAdvert(?Advert $advert): self
     {
         $this->advert = $advert;
 

@@ -2,20 +2,45 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\TermFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use App\Repository\AdvertRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 #[Entity(repositoryClass: AdvertRepository::class)]
+#[ApiResource(
+    collectionOperations: [
+        'get' => ['method' => 'get'],
+        'post' => ['method' => 'post'],
+    ],
+    itemOperations: [
+        'get' => ['method' => 'get'],
+    ],
+    attributes: [
+        'normalization_context' => ['groups' => ['advert:read', 'advert:write']],
+        'denormalization_context' => ['groups' => ['advert:write']],
+    ]
+)]
+#[ApiFilter(OrderFilter::class, properties: ['publishedAt', 'price'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(RangeFilter::class, properties: ['price'])]
+#[ApiFilter(SearchFilter::class, properties: ['category.name : exact'])]
 class Advert
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['advert:read', 'advert:write'])]
     private ?int $id = null;
 
 
@@ -28,6 +53,7 @@ class Advert
         minMessage: 'Le titre doit contenir au minimum 3 caractères.',
         maxMessage: 'Le titre doit contenir au maximum 100 caractères.'
     )]
+    #[Groups(['advert:read', 'advert:write'])]
     private ?string $title = null;
 
 
@@ -38,6 +64,7 @@ class Advert
         max: 1200,
         maxMessage: 'Le contenu doit avoir au maximum 1200 caractères.'
     )]
+    #[Groups(['advert:read', 'advert:write'])]
     private ?string $content = null;
 
 
@@ -48,6 +75,7 @@ class Advert
         max: 255,
         maxMessage: 'Le nom de l\'auteur doit avoir au maximum 255 caractères.'
     )]
+    #[Groups(['advert:read', 'advert:write'])]
     private ?string $author = null;
 
 
@@ -58,11 +86,13 @@ class Advert
         max: 180,
         maxMessage: 'L\'adresse email doit avoir au maximum 180 caractères.'
     )]
+    #[Groups(['advert:read', 'advert:write'])]
     private ?string $email = null;
 
 
     #[ORM\ManyToOne(targetEntity: Category::class)]
     #[ORM\JoinColumn(nullable: 'false')]
+    #[Groups(['advert:read', 'advert:write'])]
     private ?Category $category = null;
 
 
@@ -75,18 +105,22 @@ class Advert
         minMessage: 'Le prix ne peut pas être inférieur à 1.',
         maxMessage: 'Le prix ne peut pas être supérieur à 1000000.00 .'
     )]
+    #[Groups(['advert:read', 'advert:write'])]
     private ? float $price = null;
 
 
     #[ORM\Column(type: 'string', length: '255')]
+    #[Groups(['advert:read', 'advert:write'])]
     private ?string $state = null;
 
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['advert:read', 'advert:write'])]
     private ?\DateTime $createdAt = null;
 
 
     #[ORM\Column(type: 'datetime', nullable: 'true')]
+    #[Groups(['advert:read', 'advert:write'])]
     private ?\DateTime $publishedAt = null;
 
     public function __construct()

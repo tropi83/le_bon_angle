@@ -24,6 +24,30 @@
         <div class="section">
             {{ include('advert/_form.html.twig') }}
         </div>
+        <div class="section">
+            <h1 class="title">Images</h1>
+            <h2 class="subtitle">Total: {{ pictures|length }}</h2>
+            <div class="columns is-multiline">
+                {% for picture in pictures %}
+                    <div class="column">
+                        <div class="card mb-2">
+                            <div class="card-image">
+                                <figure class="image is-4by3">
+                                    {% if picture.path is defined %}
+                                        <img src="{{ asset(picture.path) }}" alt="image">
+                                    {% endif %}
+                                </figure>
+                            </div>
+                            <div class="card-content">
+                                <div class="content">
+                                    <time >{{ picture.createdAt ? picture.createdAt | date('Y-m-d H:i:s') : '' }}</time>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
 

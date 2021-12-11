@@ -48,8 +48,8 @@
                         <td>{{ advert.email }}</td>
                         <td>{{ advert.price }}</td>
                         <td>{{ advert.state }}</td>
-                        <td>{{ advert.createdAt ? advert.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                        <td>{{ advert.publishedAt ? advert.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ advert.createdAt ? advert.createdAt | date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ advert.publishedAt ? advert.publishedAt | date('Y-m-d H:i:s') : '' }}</td>
                         <td>
                             {% if workflow_can(advert, 'publish') %}
                                 <a class="button is-primary is-rounded float-right mb-1" href="{{ path('advert_workflow', {'id': advert.id, 'state': 'publish' }) }}">
