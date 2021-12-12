@@ -1,15 +1,18 @@
 <?php
+
+
 namespace App\EventSubscriber;
+
 use App\Entity\AdminUser;
 use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 class HashPasswordEventSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private UserPasswordHasherInterface $passwordHasher)
-    {
-    }
+    public function __construct(private UserPasswordHasherInterface $passwordHasher){}
+
     public function getSubscribedEvents(): array
     {
         return [

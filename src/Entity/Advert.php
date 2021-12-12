@@ -125,7 +125,8 @@ class Advert
 
     public function __construct()
     {
-        $this->state= "draft";
+        $this->state = "draft";
+        $this->createdAt = new \DateTime('now', 'Europe/Paris');
     }
 
     public function getId(): ?int
