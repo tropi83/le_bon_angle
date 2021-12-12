@@ -29,7 +29,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     ],
     attributes: [
         'normalization_context' => ['groups' => ['advert:read', 'advert:write']],
-        'denormalization_context' => ['groups' => ['advert:write']],
+        'denormalization_context' => ['groups' => ['advert:write', "category:write"]],
     ]
 )]
 #[ApiFilter(OrderFilter::class, properties: ['publishedAt', 'price'], arguments: ['orderParameterName' => 'order'])]
@@ -126,7 +126,7 @@ class Advert
     public function __construct()
     {
         $this->state = "draft";
-        $this->createdAt = new \DateTime('now', 'Europe/Paris');
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int

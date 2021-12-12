@@ -30,23 +30,19 @@ class PublishEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $advert->setPublishedAt(new \DateTime('now', 'Europe/Paris'));
+        $advert->setPublishedAt(new \DateTime());
 
         $email = (new TemplatedEmail())
                 ->to(new Address($advert->getEmail()))
                 ->subject('Publication acceptée')
                 ->htmlTemplate('email/advert_published.html.twig')
                 ->context([
-                    'publication_id' => $advert->getId(),
-                    'publication_title' => $advert->getTitle(),
-                    'publication_content' => $advert->getContent(),
-                    'publication_date' => $advert->getPublishedAt(),
+                    'advert' => $advert,
             ]);
 
         $this->mailer->send($email);
 
     }
-
 
     public static function getSubscribedEvents(): array
     {

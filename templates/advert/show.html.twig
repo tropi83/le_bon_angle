@@ -33,19 +33,23 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <th>Id</th>
+                        <th>Identifiant</th>
                         <td>{{ advert.id }}</td>
                     </tr>
                     <tr>
-                        <th>Title</th>
+                        <th>Titre</th>
                         <td>{{ advert.title }}</td>
                     </tr>
                     <tr>
-                        <th>Content</th>
+                        <th>Contenu</th>
                         <td>{{ advert.content }}</td>
                     </tr>
                     <tr>
-                        <th>Author</th>
+                        <th>Catégorie</th>
+                        <td>{{ advert.category and advert.category.name ? advert.category.name : ''}}</td>
+                    </tr>
+                    <tr>
+                        <th>Auteur</th>
                         <td>{{ advert.author }}</td>
                     </tr>
                     <tr>
@@ -53,15 +57,15 @@
                         <td>{{ advert.email }}</td>
                     </tr>
                     <tr>
-                        <th>Price</th>
+                        <th>Prix</th>
                         <td>{{ advert.price }}</td>
                     </tr>
                     <tr>
-                        <th>State</th>
+                        <th>Etat</th>
                         <td>{{ advert.state }}</td>
                     </tr>
                     <tr>
-                        <th>PublishedAt</th>
+                        <th>Publié le </th>
                         <td>{{ advert.publishedAt ? advert.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
                     </tr>
                 </tbody>

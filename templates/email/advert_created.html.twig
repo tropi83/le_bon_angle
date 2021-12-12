@@ -1,0 +1,72 @@
+{% apply inky_to_html|inline_css(source('@css/bulma.min.css'))  %}
+    <container >
+        <row class="header">
+            <columns>
+                <spacer size="32"></spacer>
+                <h1 class="text-center title">Bonjour,</h1>
+            </columns>
+        </row>
+        <row class="mt-5">
+            <p>
+                Une nouvelle publication vient d'être ajoutée .
+            </p>
+        </row>
+        <row class="mt-5">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Identifiant</th>
+                        <td>{{ advert.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Titre</th>
+                        <td>{{ advert.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Contenu</th>
+                        <td>{{ advert.content }}</td>
+                    </tr>
+                    <tr>
+                        <th>Catégorie</th>
+                        <td>{{ advert.category and advert.category.name ? advert.category.name : ''}}</td>
+                    </tr>
+                    <tr>
+                        <th>Auteur</th>
+                        <td>{{ advert.author }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ advert.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prix</th>
+                        <td>{{ advert.price }}</td>
+                    </tr>
+                    <tr>
+                        <th>Etat</th>
+                        <td>{{ advert.state }}</td>
+                    </tr>
+                    <tr>
+                        <th>Créer le</th>
+                        <td>{{ advert.createdAt ? advert.createdAt | date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </row>
+        <row class="mt-5 text-center">
+            <a class="button is-grey-light is-rounded float-right" href="{{ url('advert_show', {'id': advert.id}) }}">
+                <span>Consulter</span>
+            </a>
+            {% if workflow_can(advert, 'publish') %}
+                <a class="button is-primary is-rounded float-right mb-1" href="{{ url('advert_workflow', {'id': advert.id, 'state': 'publish' }) }}">
+                    <span>Publier</span>
+                </a>
+            {% endif %}
+            {% if workflow_can(advert, 'reject') %}
+                <a class="button is-danger is-rounded float-right  mb-1" href="{{ url('advert_workflow', {'id': advert.id, 'state': 'reject' }) }}">
+                    <span>Rejeter</span>
+                </a>
+            {% endif %}
+        </row>
+    </container>
+{% endapply %}

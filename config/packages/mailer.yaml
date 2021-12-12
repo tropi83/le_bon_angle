@@ -2,6 +2,6 @@ framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
         envelope:
-            sender: 'admin@lebonangle.com'
+            sender: 'noreply-admin@lebonangle.com'
         headers:
-            from: 'Administrateur <admin@lebonangle.com>'
+            from: 'Administrateur <noreply-admin@lebonangle.com>'

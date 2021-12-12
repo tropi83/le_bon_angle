@@ -1,24 +1,24 @@
-{% apply inky_to_html %}
+{% apply inky_to_html|inline_css(source('@css/bulma.min.css'))  %}
     <container>
         <row class="header">
             <columns>
-                <spacer size="16"></spacer>
-                <h1 class="text-center">Bonjour {{ email.to[0].address }},</h1>
+                <spacer size="32"></spacer>
+                <h1 class="text-center title">Bonjour,</h1>
             </columns>
         </row>
-        <row class="">
+        <row class="mt-5">
             <p>
-                Votre publication "{{ publication_title }}" a été validé le {{ publication_date |date('Y-m-d H:i:s') }} .
+                Votre publication "{{ advert.title }}" a été validé le {{ advert.publishedAt |date('Y-m-d H:i:s') }} .
             </p>
         </row>
-        <row class="">
+        <row class="mt-5">
             <p>
-                <code>{{ publication_content }}</code>
+                <code>{{ advert.content }}</code>
             </p>
         </row>
-        <row class="">
+        <row class="mt-5">
             <p>
-                <a href="{{ url('advert_show', {'id': publication_id}) }}">Cliquez ici pour voir votre publication</a>
+                <a href="{{ url('advert_show', {'id': advert.id}) }}">Cliquez ici pour voir votre publication</a>
             </p>
         </row>
     </container>
