@@ -57,16 +57,15 @@
             <a class="button is-grey-light is-rounded float-right" href="{{ url('advert_show', {'id': advert.id}) }}">
                 <span>Consulter</span>
             </a>
-            {% if workflow_can(advert, 'publish') %}
+
                 <a class="button is-primary is-rounded float-right mb-1" href="{{ url('advert_workflow', {'id': advert.id, 'state': 'publish' }) }}">
                     <span>Publier</span>
                 </a>
-            {% endif %}
-            {% if workflow_can(advert, 'reject') %}
+
                 <a class="button is-danger is-rounded float-right  mb-1" href="{{ url('advert_workflow', {'id': advert.id, 'state': 'reject' }) }}">
                     <span>Rejeter</span>
                 </a>
-            {% endif %}
+      
         </row>
     </container>
 {% endapply %}
