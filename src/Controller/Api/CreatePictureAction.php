@@ -18,17 +18,9 @@ final class CreatePictureAction extends AbstractController
         $uploadedFile = $request->files->get('file');
         $advertId = $request->request->get('advert');
 
-        if(!$advertId){
-            throw new BadRequestHttpException('"Advert" is required');
-        }
-
         $advert = $advertRepository->findOneBy([
             'id' => $advertId
         ]);
-
-        if(!$advert){
-            throw new BadRequestHttpException('"Advert" not found');
-        }
 
         if (!$uploadedFile) {
             throw new BadRequestHttpException('"file" is required');
@@ -36,7 +28,9 @@ final class CreatePictureAction extends AbstractController
 
         $picture = new Picture();
         $picture->file = $uploadedFile;
-        $picture->setAdvert($advert);
+        if($advert){
+            $picture->setAdvert($advert);
+        }
 
         return $picture;
     }

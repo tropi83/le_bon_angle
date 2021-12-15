@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Picture;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,23 @@ class PictureRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Picture::class);
+    }
+
+    /**
+     * @param Datetime $from
+     * @return int Returns the number of deletions
+     */
+    public function deleteUnusedPicsByDate(Datetime $from): int
+    {
+        $now = new DateTime();
+        $qd = $this->createQueryBuilder('p');
+        $qd->delete()
+            ->where('p.createdAt BETWEEN :from AND :now')
+            ->andWhere('p.advert is NULL')
+            ->setParameter('from', $from )
+            ->setParameter('now', $now);
+        $query = $qd->getQuery();
+        return $query->execute();
     }
 
     // /**

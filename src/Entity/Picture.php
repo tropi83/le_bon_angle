@@ -77,7 +77,7 @@ class Picture
 
 
     #[ORM\ManyToOne(targetEntity: Advert::class)]
-    #[ORM\JoinColumn(nullable: 'false')]
+    #[ORM\JoinColumn(nullable: 'true', onDelete: "CASCADE")]
     #[Groups(['picture:read', 'picture:write'])]
     private ?Advert $advert = null;
 
