@@ -10,18 +10,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/admin/user')]
 class AdminUserController extends AbstractController
 {
 
     #[Route('/', name: 'admin_user_index', methods: ['GET'])]
-    public function index(AdminUserRepository $adminUserRepository): Response
+    public function index(AdminUserRepository $adminUserRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $adminNumber = sizeof($adminUserRepository->findAll());
+        $admins = $paginator->paginate(
+            $adminUserRepository->findAll(),
+            $request->query->getInt('page', 1),
+            30
+        );
+
         return $this->render('admin_user/index.html.twig', [
-            'admin_users' => $adminUserRepository->findAll(),
-            'admin_nb' => $adminNumber,
+            'admin_users' => $admins,
         ]);
     }
 

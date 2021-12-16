@@ -15,23 +15,24 @@
                 Administrateurs
             </p>
             <p class="subtitle">
-                Total: {{ admin_nb }}
+                Total: {{ admin_users.getTotalItemCount  }}
             </p>
         </div>
     </section>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Email</th>
-                        <th>Roles</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>actions</th>
-                    </tr>
-                </thead>
-                <tbody>
+    <div class="wrap">
+        <table class="head">
+            <tr>
+                <th>Identifiant</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Nom d'utilisateur</th>
+                <th>Mot de passe </th>
+                <th>Actions</th>
+            </tr>
+        </table>
+        <div class="inner_table mt-3">
+            <table>
                 {% for admin_user in admin_users %}
                     <tr>
                         <td>
@@ -55,7 +56,11 @@
                         <td colspan="6">no records found</td>
                     </tr>
                 {% endfor %}
-                </tbody>
             </table>
+        </div>
+        <div class="mt-6">
+            {{ knp_pagination_render(admin_users) }}
+        </div>
+    </div>
 
 {% endblock %}

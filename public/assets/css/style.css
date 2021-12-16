@@ -1,3 +1,22 @@
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1 !important;
+    border-radius: 20px !important;
+    border: 6px solid transparent !important;
+    background-clip: content-box !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf !important;
+}
+
 .flex{
     display: flex;
 }
@@ -13,6 +32,11 @@
 
 .width-90{
     width: 90%;
+    margin: auto;
+}
+
+.width-100{
+    width: 100%;
     margin: auto;
 }
 
@@ -72,7 +96,7 @@
     display: inline-block;
     flex-grow: 0;
     flex-shrink: 0;
-    font-size: 14px;
+    font-size: 12px;
     height: 32px;
     max-height: 32px;
     max-width: 32px;
@@ -82,6 +106,47 @@
     position: relative;
     vertical-align: top;
     width: 32px;
-    padding-left: 5.5px;
-    padding-top: 5px;
+    padding-left: 4.5px;
+    padding-top: 7px;
+}
+
+.margin-auto{
+    margin: auto;
+}
+
+.wrap {
+    width: 100%;
+}
+
+.wrap table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+table tr td {
+    padding: 5px;
+    border: 1px solid #eee;
+    word-wrap: break-word;
+}
+
+body > div.wrap > table > tbody > tr{
+    height: 50px;
+    background-color: #eee;
+    text-align: center;
+}
+table.head tr td {
+    background: #eee;
+}
+
+.inner_table {
+    height: 50vh;
+    overflow-y: auto;
+    padding-left: 10px;
+    padding-right: 5px;
+    text-align: center;
+
+}
+th {
+    padding-top: 12px !important;
+    padding-left: 4px !important;
 }

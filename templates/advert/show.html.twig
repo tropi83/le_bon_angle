@@ -21,80 +21,86 @@
                 Créer le: {{ advert.createdAt ? advert.createdAt|date('Y-m-d H:i:s') : '' }}
             </p>
             <a class="button is-primary" href="{{ path('advert_index') }}">
-                    <span class="icon">
-                        <i class="fas fa-long-arrow-alt-left"></i>
-                    </span>
+                <span class="icon">
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                </span>
                 <span>Retour aux publications</span>
             </a>
         </div>
     </section>
     <div class="container">
         <div class="section">
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Identifiant</th>
-                        <td>{{ advert.id }}</td>
-                    </tr>
-                    <tr>
-                        <th>Titre</th>
-                        <td>{{ advert.title }}</td>
-                    </tr>
-                    <tr>
-                        <th>Contenu</th>
-                        <td>{{ advert.content }}</td>
-                    </tr>
-                    <tr>
-                        <th>Catégorie</th>
-                        <td>{{ advert.category and advert.category.name ? advert.category.name : ''}}</td>
-                    </tr>
-                    <tr>
-                        <th>Auteur</th>
-                        <td>{{ advert.author }}</td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>{{ advert.email }}</td>
-                    </tr>
-                    <tr>
-                        <th>Prix</th>
-                        <td>{{ advert.price }}</td>
-                    </tr>
-                    <tr>
-                        <th>Etat</th>
-                        <td>{{ advert.state }}</td>
-                    </tr>
-                    <tr>
-                        <th>Publié le </th>
-                        <td>{{ advert.publishedAt ? advert.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="section">
-            <h1 class="title">Images</h1>
-            <h2 class="subtitle">Total: {{ pictures|length }}</h2>
-            <div class="columns is-multiline">
-                {% for picture in pictures %}
-                        <div class="column">
-                            <div class="card mb-2">
-                                <div class="card-image">
-                                    <figure class="image is-4by3">
-                                        {% if picture.path is defined %}
-                                            <img src="{{ asset(picture.path) }}" alt="image">
-                                        {% endif %}
-                                    </figure>
-                                </div>
-                                <div class="card-content">
-                                    <div class="content">
-                                        <time >{{ picture.createdAt ? picture.createdAt | date('Y-m-d H:i:s') : '' }}</time>
+            <div class="columns">
+                <div class="column is-three-quarters">
+                    <table class="table width-90">
+                        <tbody>
+                        <tr>
+                            <th>Identifiant</th>
+                            <td>{{ advert.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Titre</th>
+                            <td>{{ advert.title }}</td>
+                        </tr>
+                        <tr>
+                            <th>Contenu</th>
+                            <td>{{ advert.content }}</td>
+                        </tr>
+                        <tr>
+                            <th>Catégorie</th>
+                            <td>{{ advert.category and advert.category.name ? advert.category.name : ''}}</td>
+                        </tr>
+                        <tr>
+                            <th>Auteur</th>
+                            <td>{{ advert.author }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ advert.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prix</th>
+                            <td>{{ advert.price }}</td>
+                        </tr>
+                        <tr>
+                            <th>Etat</th>
+                            <td>{{ advert.state }}</td>
+                        </tr>
+                        <tr>
+                            <th>Publié le </th>
+                            <td>{{ advert.publishedAt ? advert.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="column">
+                    <h1 class="title">Images</h1>
+                    <h2 class="subtitle">Total: {{ pictures|length }}</h2>
+                    <div class="columns is-multiline">
+                        {% for picture in pictures %}
+                            <div class="column">
+                                <div class="card mb-2">
+                                    <div class="card-image">
+                                        <figure class="image is-4by3">
+                                            {% if picture.path is defined %}
+                                                <img src="{{ asset(picture.path) }}" alt="image">
+                                            {% endif %}
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="content">
+                                            <time >{{ picture.createdAt ? picture.createdAt | date('Y-m-d H:i:s') : '' }}</time>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
+
         </div>
+
     </div>
 
 {% endblock %}

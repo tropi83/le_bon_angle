@@ -19,41 +19,42 @@
             </p>
         </div>
     </section>
-    <div class="container">
-        <div class="section">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nom</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for category in categories %}
-                    <tr {% if loop.index is odd %} class="color" {% endif %}>
-                        <td>
-                            <a class="id-tag" href="{{ path('category_show', {'id': category.id}) }}">#{{ category.id }}</a>
-                        </td>
-                        <td>{{ category.name }}</td>
-                        <td>
-                            <a class="button is-grey-light is-rounded float-right" href="{{ path('category_edit', {'id': category.id}) }}">
+    <div class="wrap">
+        <table class="head">
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </table>
+        <div class="inner_table mt-3">
+            <table>
+                <tr>
+                    {% for category in categories %}
+                <tr {% if loop.index is odd %} class="color" {% endif %}>
+                    <td>
+                        <a class="id-tag" href="{{ path('category_show', {'id': category.id}) }}">#{{ category.id }}</a>
+                    </td>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <a class="button is-grey-light is-rounded float-right" href="{{ path('category_edit', {'id': category.id}) }}">
                                     <span class="icon">
                                             <i class="fas fa-wrench"></i>
                                         </span>
-                                <span>Modifier</span>
-                            </a>
-                        </td>
-                    </tr>
+                            <span>Modifier</span>
+                        </a>
+                    </td>
+                </tr>
                 {% else %}
                     <tr>
                         <td colspan="3">no records found</td>
                     </tr>
                 {% endfor %}
-                </tbody>
+                </tr>
             </table>
         </div>
-        {{ knp_pagination_render(categories) }}
+        <div class="mt-6">
+            {{ knp_pagination_render(categories) }}
+        </div>
     </div>
-
 {% endblock %}

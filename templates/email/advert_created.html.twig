@@ -58,13 +58,13 @@
                 <span>Consulter</span>
             </a>
 
-                <a class="button is-primary is-rounded float-right mb-1" href="{{ url('advert_workflow', {'id': advert.id, 'state': 'publish' }) }}">
-                    <span>Publier</span>
-                </a>
+            <a class="button is-primary is-rounded float-right mb-1" href="{{ url('advert_workflow', {'id': advert.id, 'state': 'publish' }) }}">
+                <span>Publier</span>
+            </a>
 
-                <a class="button is-danger is-rounded float-right  mb-1" href="{{ url('advert_workflow', {'id': advert.id, 'state': 'reject' }) }}">
-                    <span>Rejeter</span>
-                </a>
+            <a class="button is-danger is-rounded float-right  mb-1" href="{{ url('advert_workflow', {'id': advert.id, 'state': 'reject' }) }}">
+                <span>Rejeter</span>
+            </a>
       
         </row>
     </container>
